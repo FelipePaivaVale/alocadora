@@ -6,6 +6,13 @@ class veiculo:
         self.modelo = modelo
         self.ano = ano
         self._alugado = False
+        
+class carro(veiculo):
+    def __init__(self,marca, modelo, ano, placa, km, val):
+        self.placa = placa
+        self.km = km
+        self.val = val
+        super().__init__(marca,modelo, ano)
 
     def alugar(self, tempo):
         self.tempo = tempo 
@@ -28,27 +35,29 @@ class veiculo:
             print("o carro esta alugado")
         else:
             print("o carro nao esta alugado")
-        
-class carro(veiculo):
-    def __init__(self, placa, km, val):
-        self.placa = placa
-        self.km = km
-        self.val = val
 
     def __str__(self):
-        return print(f'''modelo -> {self.modelo}
+        return f'''modelo -> {self.modelo}
         marca -> {self.marca}
         ano -> {self.ano}
         placa -> {self.placa}
-        km rodados -> {self.km}''')
+        km rodados -> {self.km}'''
     
-class cliente(carro):
+class cliente():
     def __init__(self, nome, id):
         self.nome = nome
         self.id = id
 
 def cadastrar():
-    marca = str(input("escreva o modelo "))
+    marca = str(input("escreva o marca "))
     ano = int(input("escreva o ano "))
-    c = carro(marca, ano)
+    modelo = str(input("escreva o modelo "))
+    print("especificações do carro")
+    placa = str(input("qual a placa do carro"))
+    km = int(input("quantos km rodados"))
+    diaria = int(input("qual o valor da diaria"))
+    c = carro(marca, modelo, ano, placa, km, diaria)
     lista_carros.append(c)
+
+c1 = cadastrar()
+print(c1)
