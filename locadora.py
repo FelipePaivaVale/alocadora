@@ -1,4 +1,5 @@
 lista_carros = []
+lista_clientes = []
 
 class veiculo:
     def __init__(self, marca, modelo, ano):
@@ -15,26 +16,31 @@ class carro(veiculo):
         self._val = val
 
     def alugar(self, tempo):
-        self.tempo = tempo 
+        self.tempo = int(tempo) 
         self._alugado = True
-        
+        self._aluguel = self._val * tempo
+
+    @property
+    def aluguel(self):
+        return self._aluguel
+    
     def devolver(self,dias):
+        self.dias = int(dias)
         atrasado = False
         self._alugado = False
         
-        if(self.tempo < dias):
-            atraso = self.tempo - dias
+        if(self.tempo < self.dias):
+            atraso = self.dias - self.tempo
             atrasado = True
 
         if(atrasado == True):
-            aluguel = self._val + ((self._val/100)*20)*atraso
+            valor_total = (self._val*self.tempo) + ((self._val+(self._val*0.20))*atraso)
 
         else:
-            aluguel = self._val*self.tempo
+            valor_total = self._val*self.tempo
 
+        self._aluguel = valor_total
 
-        return aluguel
-    
     def __str__(self):
         return f"modelo: {self._modelo}\nmarca: {self._marca}\nano: {self._ano}\nplaca: {self._placa}\nquilometros radados: {self._km}"
     
@@ -54,8 +60,6 @@ def cadastrar():
     diaria = int(input("qual o valor da diaria: "))
 
     lista_carros.append(carro(marca, modelo, ano, placa, km, diaria))
-
-    return lista_carros
 
 def cadastro_auto(marca,modelo,ano,placa,km,diaria):
     lista_carros.append(carro(marca, modelo, ano, placa, km, diaria))
@@ -90,11 +94,15 @@ def devolver_carro():
         i += 1
 
     carro_escolhido = int(input("qual carro deseja devolver"))
-    dias_da_devolução = int(input("em quantos dias foi feita a devolução"))
+    dias = int(input("em quantos dias foi feita a devolução"))
     
-    carro_escolhido = carro_devolvido-1
+    carro_escolhido = carro_escolhido-1
     carro_devolvido = lista_carros[carro_escolhido]
-    carro_devolvido.devolver(dias_da_devolução)
+
+    carro_devolvido.devolver(dias)
+    valor_total = carro_devolvido.aluguel
+
+    print(f"o valor a ser pago é de R${valor_total}")
 
 def mostrar_carros():
     for veiculos in lista_carros:
