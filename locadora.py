@@ -96,4 +96,10 @@ def devolver_carro():
 def mostrar_carros():
     for veiculos in lista_carros:
         print(veiculos)
-                  
+        
+def listar_marca(marca):
+    for veiculos in lista_carros:
+        if (veiculos._marca == marca):
+            print(veiculos)
+            print('==========================\n')
+            
