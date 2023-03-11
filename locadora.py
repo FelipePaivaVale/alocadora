@@ -20,15 +20,18 @@ class carro(veiculo):
         
     def devolver(self,dias):
         atrasado = False
-
+        self._alugado = False
+        
         if(self.tempo < dias):
             atraso = self.tempo - dias
             atrasado = True
 
         if(atrasado == True):
             aluguel = self._val + ((self._val/100)*20)*atraso
+
         else:
             aluguel = self._val*self.tempo
+
 
         return aluguel
     
@@ -102,4 +105,15 @@ def listar_marca(marca):
         if (veiculos._marca == marca):
             print(veiculos)
             print('==========================\n')
-            
+
+def listar_modelo(modelo):
+    for veiculos in lista_carros:
+        if (veiculos._modelo == modelo):
+            print(veiculos)
+            print('==========================\n')
+
+def listar_ano(ano):
+    for veiculos in lista_carros:
+        if (veiculos._ano == ano):
+            print(veiculos)
+            print('==========================\n')
