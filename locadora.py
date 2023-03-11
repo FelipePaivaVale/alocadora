@@ -106,6 +106,7 @@ def devolver_carro():
 
 def mostrar_carros():
     for veiculos in lista_carros:
+        print("-"*30)
         print(veiculos)
         
 def listar_marca(marca):
@@ -125,3 +126,4 @@ def listar_ano(ano):
         if (veiculos._ano == ano):
             print(veiculos)
             print('==========================\n')
+
