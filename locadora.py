@@ -16,7 +16,7 @@ class carro(veiculo):
 
     def alugar(self, tempo):
         self.tempo = tempo 
-        self.alugado = True
+        self._alugado = True
         
     def devolver(self,dias):
         atrasado = False
@@ -37,7 +37,7 @@ class carro(veiculo):
             print("o carro nao esta alugado")
 
     def __str__(self):
-        return f"modelo: {self._modelo}\nmarca: {self._marca}\nano: {self._ano}\nplaca: {self._placa}\nquilometros radados: {self._km}\n"
+        return f"modelo: {self._modelo}\nmarca: {self._marca}\nano: {self._ano}\nplaca: {self._placa}\nquilometros radados: {self._km}"
     
 class cliente():
     def __init__(self, nome, id):
@@ -62,10 +62,29 @@ cadastro_auto("fiat","riske",2020,"anc343",0,20)
 cadastro_auto("bmw","breske",2020,"akr250",0,20)
 cadastro_auto("bmw","xesque",2020,"kbm345",0,20)
 
-i= 1
-for veiculos in lista_carros:
-    print(i,"=========================")
-    print(veiculos)
-    print('==========================\n')
-    i += 1
+def alugar_carro():
+    i= 1
+    for veiculos in lista_carros:
+        if(veiculos._alugado == False):
+            print(i,"=========================")
+            print(veiculos)
+            print('==========================\n')
+            i += 1
+        else:
+            pass
+    carro_selecionado = int(input("selecione um carro para alugar: "))
+    carro_selecionado = carro_selecionado-1
+    tempo_aluguel = int(input("quantos dias deseja alugar: "))
+    lista_carros[carro_selecionado].alugar(tempo_aluguel)
+
+alugar_carro()
+#i= 1
+#for veiculos in lista_carros:
+#    if(veiculos._alugado == False):
+#        print(i,"=========================")
+#        print(veiculos)
+#        print('==========================\n')
+#        i += 1
+#    else:
+#        pass
 
