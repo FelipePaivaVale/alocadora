@@ -1,3 +1,5 @@
+import random
+
 lista_carros = []
 lista_clientes = []
 
@@ -45,10 +47,35 @@ class carro(veiculo):
         return f"modelo: {self._modelo}\nmarca: {self._marca}\nano: {self._ano}\nplaca: {self._placa}\nquilometros radados: {self._km}"
     
 class cliente():
-    def __init__(self, nome, id):
-        self.nome = nome
-        self.id = id
-        
+    def __init__(self, nome):
+        self._nome = nome
+        self._id = random.randint(100,999)
+        self.historico = []
+
+    @property   
+    def nome(self):
+        return self._nome
+    
+    @property   
+    def id(self):
+        return self._id
+
+    def consultar_historico(self):
+        for carros in self.historico:
+            print("="*10)
+            print(carros)
+            print("="*10)
+
+    def alugar_carro_usuario(self,carro_novo):
+        self.historico.append(carro_novo)
+    
+    def __str__(self):
+        return f' {self._nome} - {self._id}'
+
+def cadastrar_cliente():
+    novo_cliente = str(input("qual o nome do cliente"))
+    lista_clientes.append(cliente(novo_cliente))
+
 def cadastrar():
     marca = str(input("marca: "))
     modelo = str(input("modelo: "))
@@ -63,6 +90,9 @@ def cadastrar():
 
 def cadastro_auto(marca,modelo,ano,placa,km,diaria):
     lista_carros.append(carro(marca, modelo, ano, placa, km, diaria))
+
+def cadastro_usuario_auto(nome):
+    lista_clientes.append(cliente(nome))
 
 def alugar_carro():
     i= 1
@@ -82,6 +112,14 @@ def alugar_carro():
     carro_alugado.alugar(tempo_aluguel)
 
     valor_total = carro_alugado._val * tempo_aluguel
+
+    mostrar_usuarios()
+    comprador = int(input("quem ira comprar o carro"))
+    comprador = comprador-1
+    comprador = lista_clientes[comprador]
+
+    comprador.alugar_carro_usuario(carro_alugado)
+
     print(f"o valor do seu aluguel é de R${valor_total}")
 
 def devolver_carro():
@@ -127,3 +165,20 @@ def listar_ano(ano):
             print(veiculos)
             print('==========================\n')
 
+def mostrar_usuarios():
+    i = 1
+    for user in lista_clientes:  
+        print(i)
+        print('='*20)
+        print(user)
+        i += 1
+    
+def mostrar_historico():
+    mostrar_usuarios()
+
+    escolhido = int(input("deseja verificar historico de qual usuario: "))
+
+    escolhido = escolhido-1
+    usuario_escolhido = lista_clientes[escolhido]
+
+    usuario_escolhido.consultar_historico()
