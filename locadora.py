@@ -16,6 +16,7 @@ class carro(veiculo):
         self._placa = placa
         self._km = km
         self._val = val
+        self._aluguel = self._val
 
     def alugar(self, tempo):
         self.tempo = int(tempo) 
@@ -23,9 +24,9 @@ class carro(veiculo):
         self._aluguel = self._val * tempo
 
     @property
-    def aluguel(self):
-        return self._aluguel
-    
+    def km(self):
+        return self._km
+
     def devolver(self,dias):
         self.dias = int(dias)
         atrasado = False
@@ -44,7 +45,7 @@ class carro(veiculo):
         self._aluguel = valor_total
 
     def __str__(self):
-        return f"modelo: {self._modelo}\nano: {self._ano}\nplaca: {self._placa}\nquilometros radados: {self._km}"
+        return f"marca: {self._marca}\nmodelo: {self._modelo}\nano: {self._ano}\nplaca: {self._placa}\nquilometros radados: {self._km}\ndiaria: {self._aluguel}"
     
 class cliente():
     def __init__(self, nome):
@@ -139,7 +140,7 @@ class app(cliente, carro, veiculo):
         carro_devolvido = lista_carros[carro_escolhido]
 
         carro_devolvido.devolver(dias)
-        valor_total = carro_devolvido.aluguel
+        valor_total = carro_devolvido._aluguel
 
         print(f"o valor a ser pago é de R${valor_total}\n \n")
 
@@ -171,9 +172,17 @@ class app(cliente, carro, veiculo):
         for user in lista_clientes:  
             print(i, '='*20)
             print(user)
-            print("\n")
             i += 1
-        
+            
+    def mostrar_alugados():
+        i= 1
+        for veiculos in lista_carros:
+            if(veiculos._alugado == True):
+                print(i,"=========================")
+                print(veiculos)
+                print('==========================\n')
+            i += 1
+
     def mostrar_historico():
         app.mostrar_usuarios()
 
