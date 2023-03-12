@@ -73,10 +73,6 @@ class cliente():
         return f'cliente: {self._nome} - {self._id}'
 
 class app(cliente, carro, veiculo):
-    def __init__(self):
-        lista_carros = []
-        lista_clientes = []
-
     def cadastrar_cliente():
         novo_cliente = str(input("qual o nome do cliente: "))
         lista_clientes.append(cliente(novo_cliente))
