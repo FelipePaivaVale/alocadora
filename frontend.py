@@ -21,12 +21,13 @@ while (True):
     mensagem('8- Cadastrar cliente')
     mensagem('9- Exibir clientes')
     mensagem('10- Verificar hitorico de cliente')
+    mensagem('0 - encerrar programa')
     print('-' * 70)
 
     try:
         operação = int(input('Informe a operação que deseja realizar: '))
     except:
-        operação = 0
+        operação = -1
 
     if (operação == 1):
         app.cadastrar()
@@ -82,6 +83,9 @@ while (True):
         app.mostrar_historico()
         input()
         limpar_tela()
+
+    elif(operação == 0):
+        break
 
     else:
         print('Operação invalida\n')
