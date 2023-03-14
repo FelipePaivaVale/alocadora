@@ -42,23 +42,18 @@ while (True):
     
     elif (operação == 5):
         app.lista_de_marcas()
-
         marca = str(input("por qual marca deseja procurar? "))
-
         app.listar_marca(marca)
         input()
 
     elif (operação == 6):
         app.lista_de_modelos()
-
         modelo = str(input("por qual modelo deseja procurar? "))
-            
         app.listar_modelo(modelo)
         input()
 
     elif(operação == 7):
         ano = int(input("de qual ano deseja ver os carros"))
-
         app.listar_ano(ano)
         input()
 
@@ -75,4 +70,4 @@ while (True):
         input()
 
     else:
-        print('Operação invalida')
+        print('Operação invalida\n')
