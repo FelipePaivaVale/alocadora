@@ -16,6 +16,7 @@ while (True):
     mensagem('7- Listar veículos por ano')
     mensagem('8- Cadastrar cliente')
     mensagem('9- Exibir clientes')
+    mensagem('10- Verificar hitorico de cliente')
     print('-' * 70)
 
     try:
@@ -45,7 +46,6 @@ while (True):
         marca = str(input("por qual marca deseja procurar? "))
 
         app.listar_marca(marca)
-
         input()
 
     elif (operação == 6):
@@ -54,14 +54,12 @@ while (True):
         modelo = str(input("por qual modelo deseja procurar? "))
             
         app.listar_modelo(modelo)
-
         input()
 
     elif(operação == 7):
         ano = int(input("de qual ano deseja ver os carros"))
 
         app.listar_ano(ano)
-
         input()
 
     elif(operação == 8):
@@ -70,6 +68,10 @@ while (True):
     
     elif(operação == 9):
         app.mostrar_usuarios()
+        input()
+
+    elif(operação == 10):
+        app.mostrar_historico()
         input()
 
     else:
