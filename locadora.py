@@ -1,4 +1,5 @@
 import random
+from datetime import timedelta, date
 
 lista_carros = []
 lista_clientes = []
@@ -21,7 +22,11 @@ class carro(veiculo):
     def alugar(self, tempo):
         self.tempo = int(tempo) 
         self._alugado = True
-        self._aluguel = self._val * tempo
+        self._aluguel_a_pagar = self._val * tempo
+
+        self._dia_alugado = date.today()
+        self._entrega = timedelta(days= tempo)
+        self._dia_entrega = self._dia_alugado + self._entrega
 
     @property
     def km(self):
@@ -31,18 +36,24 @@ class carro(veiculo):
         self.dias = int(dias)
         atrasado = False
         self._alugado = False
-        
-        if(self.tempo < self.dias):
+
+        self._tempo_para_entregar = timedelta(days= dias)
+        self._dia_devolvido = self._dia_alugado + self._tempo_para_entregar
+
+        if(self._dia_entrega < self._dia_devolvido):
             atraso = self.dias - self.tempo
             atrasado = True
 
         if(atrasado == True):
             valor_total = (self._val*self.tempo) + ((self._val+(self._val*0.20))*atraso)
+            tempo_atrasado = abs((self._dia_devolvido-self._dia_entrega).days)
+
+            print(f"Entrega atrasada deveria ser entregue há: {tempo_atrasado} dias no dia {self._dia_entrega}")
 
         else:
             valor_total = self._val*self.tempo
 
-        self._aluguel = valor_total
+        self._aluguel_a_pagar = valor_total
 
     def __str__(self):
         if(self._alugado == True):
@@ -129,6 +140,10 @@ class app(cliente, carro, veiculo):
             
             carro_alugado.alugar(tempo_aluguel)
 
+            hoje = date.today()
+            entrega = timedelta(days= tempo_aluguel)
+            data_entrega = hoje + entrega
+
             valor_total = carro_alugado._val * tempo_aluguel
 
             app.mostrar_usuarios()
@@ -138,7 +153,8 @@ class app(cliente, carro, veiculo):
 
             comprador.alugar_carro_usuario(carro_alugado)
 
-            print(f"o valor do seu aluguel é de R${valor_total}\n")
+            print(f"o valor do seu aluguel é de R${valor_total}")
+            print(f"alugado dia: {hoje}\ndata de entrega: {data_entrega}")
 
     def devolver_carro():
         carros_alugados = []
@@ -165,7 +181,7 @@ class app(cliente, carro, veiculo):
             carro_devolvido = lista_carros[carro_escolhido]
 
             carro_devolvido.devolver(dias)
-            valor_total = carro_devolvido._aluguel
+            valor_total = carro_devolvido._aluguel_a_pagar
 
             print(f"o valor a ser pago é de R${valor_total}\n \n")
 
@@ -175,22 +191,49 @@ class app(cliente, carro, veiculo):
             print(veiculos)
             
     def listar_marca(marca):
+        lista_por_marca = []
         for veiculos in lista_carros:
             if (veiculos._marca == marca):
-                print(veiculos)
-                print('==========================\n')
+                lista_por_marca.append(veiculos)
+
+        if(len(lista_por_marca) == 0):
+            print("não há carros disponiveis desta marca")
+
+        else:    
+            for veiculos in lista_carros:
+                if (veiculos._marca == marca):
+                    print(veiculos)
+                    print('==========================\n')
 
     def listar_modelo(modelo):
+        lista_por_modelo = []
         for veiculos in lista_carros:
             if (veiculos._modelo == modelo):
-                print(veiculos)
-                print('==========================\n')
+                lista_por_modelo.append(veiculos)
+
+        if(len(lista_por_modelo) == 0):
+            print("não há carros disponiveis deste modelo")
+
+        else:   
+            for veiculos in lista_carros:
+                if (veiculos._modelo == modelo):
+                    print(veiculos)
+                    print('==========================\n')
 
     def listar_ano(ano):
+        lista_por_ano = []
         for veiculos in lista_carros:
-            if (veiculos._ano == ano):
-                print(veiculos)
-                print('==========================\n')
+            if(veiculos._ano == ano):
+                lista_por_ano.append(veiculos)
+
+        if(len(lista_por_ano) == 0):
+            print("não possuimos carros deste ano")
+
+        else:        
+            for veiculos in lista_carros:
+                if (veiculos._ano == ano):
+                    print(veiculos)
+                    print('==========================\n')
 
     def mostrar_usuarios():
         i = 1
@@ -249,11 +292,11 @@ class app(cliente, carro, veiculo):
         placa = placa + "".join(random.choice(letras))
         placa = placa + "".join(random.choice(numeros)for i in range(2))
 
-app.cadastro_auto("fiat", "uno", 2019, "abc123", 0, 30)
-app.cadastro_auto("fiat", "pulse", 2018, "anc343", 0, 30)
-app.cadastro_auto("bmw", "x6", 2010, "akr250", 0, 30)
-app.cadastro_auto("bmw", "x5", 2014, "kbm345", 0, 30)
-app.cadastro_auto("renault", "duster", 2018, "kbm345", 0, 30)
-app.cadastro_auto("renault", "logan", 2011, "kbm77", 0, 30)
+app.cadastro_auto("fiat", "uno", 2019, app.gerador_de_placa(), 0, 30)
+app.cadastro_auto("fiat", "pulse", 2018, app.gerador_de_placa(), 0, 30)
+app.cadastro_auto("bmw", "x6", 2010, app.gerador_de_placa(), 0, 30)
+app.cadastro_auto("bmw", "x5", 2014, app.gerador_de_placa(), 0, 30)
+app.cadastro_auto("renault", "duster", 2018, app.gerador_de_placa(), 0, 30)
+app.cadastro_auto("renault", "logan", 2011, app.gerador_de_placa(), 0, 30)
 app.cadastro_usuario_auto('pedro')
 app.cadastro_usuario_auto('josivaldo')
