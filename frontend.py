@@ -1,10 +1,14 @@
 from locadora import *
+import os
 
 print('Bem-Vindo ao app de carros Lucas Samuel e Felipe\n')
 
 def mensagem(msg):
     print('-' * 70)
     print(msg)
+
+def limpar_tela():
+    os.system('cls') or None
 
 while (True):
     mensagem('1- Cadastrar Veículo')
@@ -27,47 +31,59 @@ while (True):
     if (operação == 1):
         app.cadastrar()
         input()
+        limpar_tela()
 
     elif (operação == 2):
         app.mostrar_carros()
-        input() 
+        input()
+        limpar_tela()
     
     elif(operação == 3):
         app.alugar_carro()
         input()
+        limpar_tela()
 
     elif(operação == 4):
         app.devolver_carro()
         input()
+        limpar_tela()
     
     elif (operação == 5):
         app.lista_de_marcas()
         marca = str(input("por qual marca deseja procurar? "))
         app.listar_marca(marca)
         input()
+        limpar_tela()
 
     elif (operação == 6):
         app.lista_de_modelos()
         modelo = str(input("por qual modelo deseja procurar? "))
         app.listar_modelo(modelo)
         input()
+        limpar_tela()
 
     elif(operação == 7):
-        ano = int(input("de qual ano deseja ver os carros"))
+        ano = int(input("de qual ano deseja ver os carros: "))
         app.listar_ano(ano)
         input()
+        limpar_tela()
 
     elif(operação == 8):
         app.cadastrar_cliente()
         input()
+        limpar_tela()
     
     elif(operação == 9):
         app.mostrar_usuarios()
         input()
+        limpar_tela()
 
     elif(operação == 10):
         app.mostrar_historico()
         input()
+        limpar_tela()
 
     else:
         print('Operação invalida\n')
+        input()
+        limpar_tela()
