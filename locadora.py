@@ -28,9 +28,15 @@ class carro(veiculo):
         self._entrega = timedelta(days= tempo)
         self._dia_entrega = self._dia_alugado + self._entrega
 
+    
+
     @property
     def km(self):
         return self._km
+    
+    @km.setter
+    def km(self, kms):
+        self._km = self._km + kms
 
     def devolver(self,dias):
         self.dias = int(dias)
@@ -178,15 +184,19 @@ class app(cliente, carro, veiculo):
 
             carro_escolhido = int(input("qual carro deseja devolver: "))
             dias = int(input("em quantos dias foi feita a devolução: "))
-            
+            km_rodados = int(input("quantos kms foram rodados no carro: "))
+    
             carro_escolhido = carro_escolhido-1
+
+            
             try:
                 carro_devolvido = lista_carros[carro_escolhido]
             except:
                 print("id de carro inexistente tente escolher outro")
                 input()
                 app.devolver_carro()
-
+                
+            carro_devolvido.km = km_rodados
             carro_devolvido.devolver(dias)
             valor_total = carro_devolvido._aluguel_a_pagar
 
@@ -298,6 +308,7 @@ class app(cliente, carro, veiculo):
         placa = placa + "".join(random.choice(numeros))
         placa = placa + "".join(random.choice(letras))
         placa = placa + "".join(random.choice(numeros)for i in range(2))
+        return placa
     
     def selecionar_comprador():
         app.mostrar_usuarios()
@@ -312,7 +323,6 @@ class app(cliente, carro, veiculo):
             comprador = lista_clientes[comprador]
 
         return comprador
-        
 
 app.cadastro_auto("fiat", "uno", 2019, app.gerador_de_placa(), 0, 30)
 app.cadastro_auto("fiat", "pulse", 2018, app.gerador_de_placa(), 0, 30)
