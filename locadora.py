@@ -134,7 +134,12 @@ class app(cliente, carro, veiculo):
                 i += 1
             carro_selecionado = int(input("selecione um carro para alugar: "))
             carro_selecionado = carro_selecionado-1
-            carro_alugado = lista_carros[carro_selecionado]
+            try:
+                carro_alugado = lista_carros[carro_selecionado]
+            except:
+                print("id de carro inexistente tente escolher outro")
+                input()
+                app.alugar_carro()
 
             tempo_aluguel = int(input("quantos dias deseja alugar: "))
             
@@ -178,7 +183,12 @@ class app(cliente, carro, veiculo):
             dias = int(input("em quantos dias foi feita a devolução: "))
             
             carro_escolhido = carro_escolhido-1
-            carro_devolvido = lista_carros[carro_escolhido]
+            try:
+                carro_devolvido = lista_carros[carro_escolhido]
+            except:
+                print("id de carro inexistente tente escolher outro")
+                input()
+                app.devolver_carro()
 
             carro_devolvido.devolver(dias)
             valor_total = carro_devolvido._aluguel_a_pagar
