@@ -151,10 +151,7 @@ class app(cliente, carro, veiculo):
 
             valor_total = carro_alugado._val * tempo_aluguel
 
-            app.mostrar_usuarios()
-            comprador = int(input("quem ira comprar o carro: "))
-            comprador = comprador-1
-            comprador = lista_clientes[comprador]
+            comprador = app.selecionar_comprador()
 
             comprador.alugar_carro_usuario(carro_alugado)
 
@@ -301,6 +298,21 @@ class app(cliente, carro, veiculo):
         placa = placa + "".join(random.choice(numeros))
         placa = placa + "".join(random.choice(letras))
         placa = placa + "".join(random.choice(numeros)for i in range(2))
+    
+    def selecionar_comprador():
+        app.mostrar_usuarios()
+        print(0,'='*20)
+        print("novo cliente")
+        comprador = int(input("quem ira comprar o carro: "))
+        if(comprador == 0):
+            app.cadastrar_cliente()
+            comprador = lista_clientes[-1]
+        else:
+            comprador = comprador-1
+            comprador = lista_clientes[comprador]
+
+        return comprador
+        
 
 app.cadastro_auto("fiat", "uno", 2019, app.gerador_de_placa(), 0, 30)
 app.cadastro_auto("fiat", "pulse", 2018, app.gerador_de_placa(), 0, 30)
