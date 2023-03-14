@@ -45,7 +45,11 @@ class carro(veiculo):
         self._aluguel = valor_total
 
     def __str__(self):
-        return f"marca: {self._marca}\nmodelo: {self._modelo}\nano: {self._ano}\nplaca: {self._placa}\nquilometros radados: {self._km}\ndiaria: {self._aluguel}"
+        if(self._alugado == True):
+            esta_alugado = "ALUGADO"
+        else:
+            esta_alugado = "DISPONIVEL PARA ALUGAR"
+        return f"marca: {self._marca}\nmodelo: {self._modelo}\nano: {self._ano}\nplaca: {self._placa}\nquilometros radados: {self._km}\ndiaria: {self._aluguel}\n{esta_alugado}"
     
 class cliente():
     def __init__(self, nome):
@@ -84,7 +88,7 @@ class app(cliente, carro, veiculo):
         ano = int(input("ano: "))
 
         print("especificações do carro\n")
-        placa = str(input("qual a placa do carro: "))
+        placa = app.gerador_de_placa()
         km = int(input("quantos km rodados: "))
         diaria = int(input("qual o valor da diaria: "))
 
@@ -97,52 +101,69 @@ class app(cliente, carro, veiculo):
         lista_clientes.append(cliente(nome))
 
     def alugar_carro():
-        i= 1
+        carros_alugaveis = []
         for veiculos in lista_carros:
             if(veiculos._alugado == False):
-                print(i,"=========================")
-                print(veiculos)
-                print('==========================\n')
-            i += 1
+                carros_alugaveis.append(veiculos)
 
-        carro_selecionado = int(input("selecione um carro para alugar: "))
-        carro_selecionado = carro_selecionado-1
-        carro_alugado = lista_carros[carro_selecionado]
+        if(len(carros_alugaveis) == 0):
+            print("não há carros disponiveis")
 
-        tempo_aluguel = int(input("quantos dias deseja alugar: "))
-        
-        carro_alugado.alugar(tempo_aluguel)
+        else:
+            i= 1
+            for veiculos in lista_carros:
+                if(veiculos._alugado == False):
+                    print(i,"=========================")
+                    print(veiculos)
+                    print('==========================\n')
+                i += 1
+            carro_selecionado = int(input("selecione um carro para alugar: "))
+            carro_selecionado = carro_selecionado-1
+            carro_alugado = lista_carros[carro_selecionado]
 
-        valor_total = carro_alugado._val * tempo_aluguel
+            tempo_aluguel = int(input("quantos dias deseja alugar: "))
+            
+            carro_alugado.alugar(tempo_aluguel)
 
-        app.mostrar_usuarios()
-        comprador = int(input("quem ira comprar o carro: "))
-        comprador = comprador-1
-        comprador = lista_clientes[comprador]
+            valor_total = carro_alugado._val * tempo_aluguel
 
-        comprador.alugar_carro_usuario(carro_alugado)
+            app.mostrar_usuarios()
+            comprador = int(input("quem ira comprar o carro: "))
+            comprador = comprador-1
+            comprador = lista_clientes[comprador]
 
-        print(f"o valor do seu aluguel é de R${valor_total}\n")
+            comprador.alugar_carro_usuario(carro_alugado)
+
+            print(f"o valor do seu aluguel é de R${valor_total}\n")
 
     def devolver_carro():
-        i= 1
+        carros_alugados = []
         for veiculos in lista_carros:
             if(veiculos._alugado == True):
-                print(i,"=========================")
-                print(veiculos)
-                print('==========================\n')
-            i += 1
-
-        carro_escolhido = int(input("qual carro deseja devolver: "))
-        dias = int(input("em quantos dias foi feita a devolução: "))
+                carros_alugados.append(veiculos)
         
-        carro_escolhido = carro_escolhido-1
-        carro_devolvido = lista_carros[carro_escolhido]
+        if(len(carros_alugados) == 0):
+            print("não há carros alugados")
 
-        carro_devolvido.devolver(dias)
-        valor_total = carro_devolvido._aluguel
+        else:
+            i= 1
+            for veiculos in lista_carros:
+                if(veiculos._alugado == True):
+                    print(i,"=========================")
+                    print(veiculos)
+                    print('==========================\n')
+                i += 1
 
-        print(f"o valor a ser pago é de R${valor_total}\n \n")
+            carro_escolhido = int(input("qual carro deseja devolver: "))
+            dias = int(input("em quantos dias foi feita a devolução: "))
+            
+            carro_escolhido = carro_escolhido-1
+            carro_devolvido = lista_carros[carro_escolhido]
+
+            carro_devolvido.devolver(dias)
+            valor_total = carro_devolvido._aluguel
+
+            print(f"o valor a ser pago é de R${valor_total}\n \n")
 
     def mostrar_carros():
         for veiculos in lista_carros:
@@ -182,7 +203,7 @@ class app(cliente, carro, veiculo):
                 print(veiculos)
                 print('==========================\n')
             i += 1
-
+    
     def mostrar_historico():
         app.mostrar_usuarios()
 
@@ -192,3 +213,46 @@ class app(cliente, carro, veiculo):
         usuario_escolhido = lista_clientes[escolhido]
 
         usuario_escolhido.consultar_historico()
+    
+    def lista_de_marcas():
+        lista_das_marcas = []
+
+        for i in range(len(lista_carros)):
+            lista_das_marcas.append(lista_carros[i]._marca)
+        
+        marcas_unicas = list(set(lista_das_marcas))
+        
+        for marcas in marcas_unicas: 
+            print("-",marcas)
+    
+    def lista_de_modelos():
+        lista_dos_modelos = []
+
+        for i in range(len(lista_carros)):
+            lista_dos_modelos.append(lista_carros[i]._modelo)
+
+        modelos_unicos = list(set(lista_dos_modelos))
+
+        for modelos in modelos_unicos:
+            print("-",modelos)
+            
+    def carros_pre_cadastrados():
+        app.cadastro_auto("fiat", "uno", 2019, "abc123", 0, 30)
+        app.cadastro_auto("fiat", "pulse", 2018, "anc343", 0, 30)
+        app.cadastro_auto("bmw", "x6", 2010, "akr250", 0, 30)
+        app.cadastro_auto("bmw", "x5", 2014, "kbm345", 0, 30)
+        app.cadastro_auto("renault", "duster", 2018, "kbm345", 0, 30)
+        app.cadastro_auto("renault", "logan", 2011, "kbm77", 0, 30)
+        app.cadastro_usuario_auto('pedro')
+        app.cadastro_usuario_auto('josivaldo')
+
+    def gerador_de_placa():
+        import string
+        letras = string.ascii_uppercase
+        numeros = string.digits
+        placa = ''.join(random.choice(letras)for i in range(3))
+        placa = placa + "".join(random.choice(numeros))
+        placa = placa + "".join(random.choice(letras))
+        placa = placa + "".join(random.choice(numeros)for i in range(2))
+
+app.carros_pre_cadastrados()
