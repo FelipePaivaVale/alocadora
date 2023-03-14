@@ -66,10 +66,14 @@ class cliente():
         return self._id
 
     def consultar_historico(self):
-        for carros in self.historico:
-            print("="*10)
-            print(carros)
-            print("="*10)
+        if(len(self.historico) == 0):
+            print("o usuario não alugou nenhum carro")
+
+        else:
+            for carros in self.historico:
+                print("="*10)
+                print(carros)
+                print("="*10)
 
     def alugar_carro_usuario(self,carro_novo):
         self.historico.append(carro_novo)
@@ -203,7 +207,7 @@ class app(cliente, carro, veiculo):
                 print(veiculos)
                 print('==========================\n')
             i += 1
-    
+
     def mostrar_historico():
         app.mostrar_usuarios()
 
@@ -235,16 +239,6 @@ class app(cliente, carro, veiculo):
 
         for modelos in modelos_unicos:
             print("-",modelos)
-            
-    def carros_pre_cadastrados():
-        app.cadastro_auto("fiat", "uno", 2019, "abc123", 0, 30)
-        app.cadastro_auto("fiat", "pulse", 2018, "anc343", 0, 30)
-        app.cadastro_auto("bmw", "x6", 2010, "akr250", 0, 30)
-        app.cadastro_auto("bmw", "x5", 2014, "kbm345", 0, 30)
-        app.cadastro_auto("renault", "duster", 2018, "kbm345", 0, 30)
-        app.cadastro_auto("renault", "logan", 2011, "kbm77", 0, 30)
-        app.cadastro_usuario_auto('pedro')
-        app.cadastro_usuario_auto('josivaldo')
 
     def gerador_de_placa():
         import string
@@ -255,4 +249,13 @@ class app(cliente, carro, veiculo):
         placa = placa + "".join(random.choice(letras))
         placa = placa + "".join(random.choice(numeros)for i in range(2))
 
-app.carros_pre_cadastrados()
+
+app.cadastro_auto("fiat", "uno", 2019, "abc123", 0, 30)
+app.cadastro_auto("fiat", "pulse", 2018, "anc343", 0, 30)
+app.cadastro_auto("bmw", "x6", 2010, "akr250", 0, 30)
+app.cadastro_auto("bmw", "x5", 2014, "kbm345", 0, 30)
+app.cadastro_auto("renault", "duster", 2018, "kbm345", 0, 30)
+app.cadastro_auto("renault", "logan", 2011, "kbm77", 0, 30)
+app.cadastro_usuario_auto('pedro')
+app.cadastro_usuario_auto('josivaldo')
+
