@@ -249,7 +249,6 @@ class app(cliente, carro, veiculo):
         placa = placa + "".join(random.choice(letras))
         placa = placa + "".join(random.choice(numeros)for i in range(2))
 
-
 app.cadastro_auto("fiat", "uno", 2019, "abc123", 0, 30)
 app.cadastro_auto("fiat", "pulse", 2018, "anc343", 0, 30)
 app.cadastro_auto("bmw", "x6", 2010, "akr250", 0, 30)
@@ -258,4 +257,3 @@ app.cadastro_auto("renault", "duster", 2018, "kbm345", 0, 30)
 app.cadastro_auto("renault", "logan", 2011, "kbm77", 0, 30)
 app.cadastro_usuario_auto('pedro')
 app.cadastro_usuario_auto('josivaldo')
-
