@@ -28,8 +28,6 @@ class carro(veiculo):
         self._entrega = timedelta(days= tempo)
         self._dia_entrega = self._dia_alugado + self._entrega
 
-    
-
     @property
     def km(self):
         return self._km
@@ -195,7 +193,7 @@ class app(cliente, carro, veiculo):
                 print("id de carro inexistente tente escolher outro")
                 input()
                 app.devolver_carro()
-                
+
             carro_devolvido.km = km_rodados
             carro_devolvido.devolver(dias)
             valor_total = carro_devolvido._aluguel_a_pagar
