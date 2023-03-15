@@ -186,7 +186,6 @@ class app(cliente, carro, veiculo):
     
             carro_escolhido = carro_escolhido-1
 
-            
             try:
                 carro_devolvido = lista_carros[carro_escolhido]
             except:
