@@ -47,15 +47,20 @@ class carro(veiculo):
         if(self._dia_entrega < self._dia_devolvido):
             atraso = self.dias - self.tempo
             atrasado = True
-
+        
         if(atrasado == True):
             valor_total = (self._val*self.tempo) + ((self._val+(self._val*0.20))*atraso)
             tempo_atrasado = abs((self._dia_devolvido-self._dia_entrega).days)
 
             print(f"Entrega atrasada deveria ser entregue há: {tempo_atrasado} dias no dia {self._dia_entrega}")
-
+        
         else:
-            valor_total = self._val*self.tempo
+            if(self.tempo > self.dias):
+                tempo_sobra = self.tempo - self.dias
+                valor_total = self._val*tempo_sobra
+                
+            else:
+                valor_total = self._val*self.tempo
 
         self._aluguel_a_pagar = valor_total
 
@@ -87,10 +92,11 @@ class cliente(carro):
         else:
             for carros in self.historico:
                 print("-"*10)
-                print(f"marca: {carros._marca}\nmodelo: {carros._modelo}\nano: {carros._ano}")
+                print(f"marca: {carros._marca}\nmodelo: {carros._modelo}\nano: {carros._ano}\nalugado dia: {self._data}")
                 print("-"*10)
 
-    def alugar_carro_usuario(self,carro_novo):
+    def devolver_carro_usuario(self,carro_novo, data):
+        self._data = data
         self.historico.append(carro_novo)
     
     def __str__(self):
@@ -157,7 +163,7 @@ class app(cliente, carro, veiculo):
 
             comprador = app.selecionar_comprador()
 
-            comprador.alugar_carro_usuario(carro_alugado)
+            comprador.devolver_carro_usuario(carro_alugado,hoje)
 
             print(f"o valor do seu aluguel é de R${valor_total}")
             print(f"alugado dia: {hoje}\ndata de entrega: {data_entrega}")
@@ -196,7 +202,7 @@ class app(cliente, carro, veiculo):
             carro_devolvido.km = km_rodados
             carro_devolvido.devolver(dias)
             valor_total = carro_devolvido._aluguel_a_pagar
-
+            
             print(f"o valor a ser pago é de R${valor_total}\n \n")
 
     def mostrar_carros():
