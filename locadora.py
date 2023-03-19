@@ -20,13 +20,13 @@ class carro(veiculo):
         self._aluguel = self._val
 
     def alugar(self, tempo):
-        self.tempo = int(tempo) 
+        self.tempo = int(tempo)
         self._alugado = True
-        self._aluguel_a_pagar = self._val * tempo
-
+        self._aluguel_a_pagar = self._val * self.tempo
+        
         self._dia_alugado = date.today()
-        self._entrega = timedelta(days= tempo)
-        self._dia_entrega = self._dia_alugado + self._entrega
+        self._entrega = timedelta(days= self.tempo) + timedelta(-1)
+        self._dia_entrega = self._dia_alugado + (self._entrega)
 
     @property
     def km(self):
@@ -41,7 +41,7 @@ class carro(veiculo):
         atrasado = False
         self._alugado = False
 
-        self._tempo_para_entregar = timedelta(days= dias)
+        self._tempo_para_entregar = timedelta(days= self.dias) + timedelta(-1)
         self._dia_devolvido = self._dia_alugado + self._tempo_para_entregar
 
         if(self._dia_entrega < self._dia_devolvido):
@@ -66,7 +66,7 @@ class carro(veiculo):
             esta_alugado = "DISPONIVEL PARA ALUGAR"
         return f"marca: {self._marca}\nmodelo: {self._modelo}\nano: {self._ano}\nplaca: {self._placa}\nquilometros radados: {self._km}\ndiaria: {self._aluguel}\n{esta_alugado}"
     
-class cliente():
+class cliente(carro):
     def __init__(self, nome):
         self._nome = nome
         self._id = random.randint(100,999)
@@ -83,12 +83,12 @@ class cliente():
     def consultar_historico(self):
         if(len(self.historico) == 0):
             print("o usuario não alugou nenhum carro")
-
+        
         else:
             for carros in self.historico:
-                print("="*10)
-                print(carros)
-                print("="*10)
+                print("-"*10)
+                print(f"marca: {carros._marca}\nmodelo: {carros._modelo}\nano: {carros._ano}")
+                print("-"*10)
 
     def alugar_carro_usuario(self,carro_novo):
         self.historico.append(carro_novo)
@@ -150,7 +150,7 @@ class app(cliente, carro, veiculo):
             carro_alugado.alugar(tempo_aluguel)
 
             hoje = date.today()
-            entrega = timedelta(days= tempo_aluguel)
+            entrega = timedelta(days= tempo_aluguel) + timedelta(-1)
             data_entrega = hoje + entrega
 
             valor_total = carro_alugado._val * tempo_aluguel
@@ -183,7 +183,7 @@ class app(cliente, carro, veiculo):
             carro_escolhido = int(input("qual carro deseja devolver: "))
             dias = int(input("em quantos dias foi feita a devolução: "))
             km_rodados = int(input("quantos kms foram rodados no carro: "))
-    
+            
             carro_escolhido = carro_escolhido-1
 
             try:
@@ -252,8 +252,8 @@ class app(cliente, carro, veiculo):
     def mostrar_usuarios():
         i = 1
         for user in lista_clientes:  
-            print(i, '='*20)
-            print(user)
+            print('-'*20)
+            print(i,"-", user)
             i += 1
             
     def mostrar_alugados():
@@ -297,6 +297,18 @@ class app(cliente, carro, veiculo):
         for modelos in modelos_unicos:
             print("-",modelos)
 
+    def lista_de_anos():
+        lista_de_anos = []
+        for i in range(len(lista_carros)):
+            lista_de_anos.append(lista_carros[i]._ano)
+        
+        anos_unicos = list(set(lista_de_anos))
+        anos_unicos.sort()
+
+        for anos in anos_unicos:
+            print(f"-{anos}", end=" ")
+        print("")
+
     def gerador_de_placa():
         import string
         letras = string.ascii_uppercase
@@ -309,8 +321,8 @@ class app(cliente, carro, veiculo):
     
     def selecionar_comprador():
         app.mostrar_usuarios()
-        print(0,'='*20)
-        print("novo cliente")
+        print('-'*20)
+        print("0 - novo cliente\n")
         comprador = int(input("quem ira comprar o carro: "))
         if(comprador == 0):
             app.cadastrar_cliente()
