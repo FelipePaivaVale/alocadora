@@ -1,5 +1,5 @@
 from locadora import *
-import os
+from os import system, name
 
 print('Bem-Vindo ao app de carros Lucas Samuel e Felipe\n')
 
@@ -8,7 +8,10 @@ def mensagem(msg):
     print(msg)
 
 def limpar_tela():
-    os.system('cls') or None
+    if name == 'nt':
+        _ = system('cls')
+    else:
+        _ = system('clear')
 
 while (True):
     mensagem('1- Cadastrar Veículo')
@@ -64,6 +67,7 @@ while (True):
         limpar_tela()
 
     elif(operação == 7):
+        app.lista_de_anos()
         ano = int(input("de qual ano deseja ver os carros: "))
         app.listar_ano(ano)
         input()
