@@ -69,7 +69,7 @@ class carro(veiculo):
             esta_alugado = "ALUGADO"
         else:
             esta_alugado = "DISPONIVEL PARA ALUGAR"
-        return f"marca: {self._marca}\nmodelo: {self._modelo}\nano: {self._ano}\nplaca: {self._placa}\nquilometros radados: {self._km}\ndiaria: {self._aluguel}\n{esta_alugado}"
+        return f"marca: {self._marca}\nmodelo: {self._modelo}\nano: {self._ano}\nplaca: {self._placa}\nquilometros radados: {self._km}\ndiaria: {self._val}\n{esta_alugado}"
     
 class cliente(carro):
     def __init__(self, nome):
@@ -104,12 +104,12 @@ class cliente(carro):
 
 class app(cliente, carro, veiculo):
     def cadastrar_cliente():
-        novo_cliente = str(input("qual o nome do cliente: "))
+        novo_cliente = str(input("qual o nome do cliente: ").lower())
         lista_clientes.append(cliente(novo_cliente))
 
     def cadastrar():
-        marca = str(input("marca: "))
-        modelo = str(input("modelo: "))
+        marca = str(input("marca: ").lower())
+        modelo = str(input("modelo: ").lower())
         ano = int(input("ano: "))
 
         print("especificações do carro\n")
