@@ -50,14 +50,14 @@ class carro(veiculo):
         
         if(atrasado == True):
             valor_total = (self._val*self.tempo) + ((self._val+(self._val*0.20))*atraso)
+
             tempo_atrasado = abs((self._dia_devolvido-self._dia_entrega).days)
 
             print(f"Entrega atrasada deveria ser entregue há: {tempo_atrasado} dias no dia {self._dia_entrega}")
         
         else:
             if(self.tempo > self.dias):
-                tempo_sobra = self.tempo - self.dias
-                valor_total = self._val*tempo_sobra
+                valor_total = self._val*self.dias
                 
             else:
                 valor_total = self._val*self.tempo
@@ -130,7 +130,6 @@ class app(cliente, carro, veiculo):
         for veiculos in lista_carros:
             if(veiculos._alugado == False):
                 carros_alugaveis.append(veiculos)
-
         if(len(carros_alugaveis) == 0):
             print("não há carros disponiveis")
 
@@ -160,7 +159,7 @@ class app(cliente, carro, veiculo):
             data_entrega = hoje + entrega
 
             valor_total = carro_alugado._val * tempo_aluguel
-
+            
             comprador = app.selecionar_comprador()
 
             comprador.devolver_carro_usuario(carro_alugado,hoje)
