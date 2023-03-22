@@ -166,6 +166,7 @@ class app(cliente, carro, veiculo):
 
             print(f"o valor do seu aluguel é de R${valor_total}")
             print(f"alugado dia: {hoje}\ndata de entrega: {data_entrega}")
+            print("ALUGADO COM SUCECSSO")
 
     def devolver_carro():
         carros_alugados = []
@@ -203,6 +204,7 @@ class app(cliente, carro, veiculo):
             valor_total = carro_devolvido._aluguel_a_pagar
             
             print(f"o valor a ser pago é de R${valor_total}\n \n")
+            print("CARRO DEVOLVIDO")
 
     def mostrar_carros():
         for veiculos in lista_carros:
