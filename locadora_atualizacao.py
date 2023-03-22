@@ -116,11 +116,11 @@ class cliente(carro):
         return f'cliente: {self._nome} - {self._id}'
 
 class app(cliente, carro, veiculo):
-    def cadastrar_cliente(self):
+    def cadastrar_cliente():
         novo_cliente = str(input("qual o nome do cliente: ").lower())
         lista_clientes.append(cliente(novo_cliente))
 
-    def cadastrar(self):
+    def cadastrar():
         marca = str(input("marca: ").lower())
         modelo = str(input("modelo: ").lower())
         ano = int(input("ano: "))
