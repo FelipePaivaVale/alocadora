@@ -80,7 +80,7 @@ class recibo(carro):
         self.quilometragem_rodada  = km
         self.dia_do_aluguel = data
         self.dia_da_entrega = entrega
-
+    
     def __str__(self) -> str:
         return f"marca: {self.carro_alugado._marca}\nmodelo: {self.carro_alugado._modelo}\nano: {self.carro_alugado._ano}\nplaca: {self.carro_alugado._placa}\nquilometros rodados no aluguel: {self.quilometragem_rodada}\nalugado dia: {self.dia_do_aluguel}\nentregue dia: {self.dia_da_entrega}"
     
@@ -131,6 +131,7 @@ class app(cliente, carro, veiculo):
         diaria = int(input("qual o valor da diaria: "))
 
         lista_carros.append(carro(marca, modelo, ano, placa, km, diaria))
+        print("cadastrado com sucesso!!")
 
     def cadastro_auto(marca,modelo,ano,placa,km,diaria):
         lista_carros.append(carro(marca, modelo, ano, placa, km, diaria))
@@ -354,12 +355,12 @@ class app(cliente, carro, veiculo):
 
         return comprador
 
-app.cadastro_auto("fiat", "uno", 2019, app.gerador_de_placa(), 0, 30)
-app.cadastro_auto("fiat", "pulse", 2018, app.gerador_de_placa(), 0, 30)
-app.cadastro_auto("bmw", "x6", 2010, app.gerador_de_placa(), 0, 30)
-app.cadastro_auto("bmw", "x5", 2014, app.gerador_de_placa(), 0, 30)
-app.cadastro_auto("renault", "duster", 2018, app.gerador_de_placa(), 0, 30)
-app.cadastro_auto("renault", "logan", 2011, app.gerador_de_placa(), 0, 30)
+app.cadastro_auto("fiat", "uno", 2019, app.gerador_de_placa(), 0, 50)
+app.cadastro_auto("fiat", "pulse", 2018, app.gerador_de_placa(), 0, 90)
+app.cadastro_auto("bmw", "x6", 2010, app.gerador_de_placa(), 0, 190)
+app.cadastro_auto("bmw", "x5", 2014, app.gerador_de_placa(), 0, 200)
+app.cadastro_auto("renault", "duster", 2018, app.gerador_de_placa(), 0, 90)
+app.cadastro_auto("renault", "logan", 2011, app.gerador_de_placa(), 0, 80)
 app.cadastro_usuario_auto('pedro')
 app.cadastro_usuario_auto('josivaldo')
 
@@ -374,6 +375,7 @@ def limpar_tela():
         _ = system('cls')
     else:
         _ = system('clear')
+
 class menu():
     def __init__(self):
         while (True):
@@ -458,5 +460,5 @@ class menu():
                 print('Operação invalida\n')
                 input()
                 limpar_tela()
-                
+
 menu()
