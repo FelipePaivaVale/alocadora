@@ -116,11 +116,11 @@ class cliente(carro):
         return f'cliente: {self._nome} - {self._id}'
 
 class app(cliente, carro, veiculo):
-    def cadastrar_cliente():
+    def cadastrar_cliente(self):
         novo_cliente = str(input("qual o nome do cliente: ").lower())
         lista_clientes.append(cliente(novo_cliente))
 
-    def cadastrar():
+    def cadastrar(self):
         marca = str(input("marca: ").lower())
         modelo = str(input("modelo: ").lower())
         ano = int(input("ano: "))
@@ -144,6 +144,7 @@ class app(cliente, carro, veiculo):
         for veiculos in lista_carros:
             if(veiculos._alugado == False):
                 carros_alugaveis.append(veiculos)
+           
         if(len(carros_alugaveis) == 0):
             print("não há carros disponiveis")
 
@@ -157,6 +158,7 @@ class app(cliente, carro, veiculo):
                 i += 1
             carro_selecionado = int(input("selecione um carro para alugar: "))
             carro_selecionado = carro_selecionado-1
+            
             try:
                 self.carro_alugado = lista_carros[carro_selecionado]
             except:
@@ -212,6 +214,7 @@ class app(cliente, carro, veiculo):
                 app.devolver_carro()
 
             carro_devolvido.km = km_rodados
+
             dia_entrega = carro_devolvido.devolver(dias)
 
             valor_total = carro_devolvido._aluguel_a_pagar
@@ -287,7 +290,7 @@ class app(cliente, carro, veiculo):
                 print('==========================\n')
             i += 1
 
-    def mostrar_historico():
+    def mostrar_historico(self):
         app.mostrar_usuarios()
 
         escolhido = int(input("deseja verificar historico de qual usuario: "))
@@ -398,7 +401,7 @@ class menu():
                 operação = -1
 
             if (operação == 1):
-                app.cadastrar()
+                app.cadastrar(self)
                 input()
                 limpar_tela()
 
@@ -439,7 +442,7 @@ class menu():
                 limpar_tela()
 
             elif(operação == 8):
-                app.cadastrar_cliente()
+                app.cadastrar_cliente(self)
                 input()
                 limpar_tela()
             
@@ -449,7 +452,7 @@ class menu():
                 limpar_tela()
 
             elif(operação == 10):
-                app.mostrar_historico()
+                app.mostrar_historico(self)
                 input()
                 limpar_tela()
 
